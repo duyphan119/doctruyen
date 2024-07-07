@@ -5,10 +5,10 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
+import { Plus } from "lucide-react";
+import { Fragment, useState } from "react";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { Button, buttonVariants } from "../ui/button";
-import { useState } from "react";
-import { Plus } from "lucide-react";
 
 export default function StoryDetailsPage({
   response,
@@ -33,10 +33,26 @@ export default function StoryDetailsPage({
         </div>
         <div className="col-span-12 md:col-span-8 space-y-2">
           <h1 className="text-3xl font-semibold">{response.data.item.name}</h1>
-          <p>Tác giả: {response.data.item.author.join(", ")}</p>
+          <p>
+            Tác giả:{" "}
+            {response.data.item.author.length > 0 &&
+            response.data.item.author[0] !== ""
+              ? response.data.item.author.join(", ")
+              : "Đang cập nhật"}
+          </p>
           <p>
             Thể loại:{" "}
-            {response.data.item.category.map((item) => item.name).join(", ")}
+            {response.data.item.category.map((item, index) => (
+              <Fragment key={item.slug}>
+                {index > 0 && <span>, </span>}
+                <Link
+                  href={`/the-loai/${item.slug}`}
+                  className="hover:underline hover:underline-offset-2 text-primary"
+                >
+                  {item.name}
+                </Link>
+              </Fragment>
+            ))}
           </p>
           <p>Trạng thái: {response.data.item.status}</p>
           <div className="flex gap-4">

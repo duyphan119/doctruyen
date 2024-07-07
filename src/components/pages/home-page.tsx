@@ -56,7 +56,6 @@ export default function HomePage({ data: { data } }: { data: HomeResponse }) {
           ))}
         </div>
       </div>
-      <footer>Footer</footer>
     </>
   );
 }

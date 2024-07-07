@@ -1,25 +1,19 @@
-import { ArrowDown, ChevronDown, Menu, MoveDown, Search } from "lucide-react";
-import Image from "next/image";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 
-import { HomeResponse } from "@/api/home.api";
+import { categoryApi } from "@/api/category.api";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { AspectRatio } from "../ui/aspect-ratio";
 import { Button, buttonVariants } from "../ui/button";
-import { categoryApi } from "@/api/category.api";
-import CategoriesNav from "./categories-nav";
 import ButtonSearch from "./button-search";
+import CategoriesNav from "./categories-nav";
 
-const statuses = [
+export const statuses = [
   {
     name: "Truyện mới",
     slug: "truyen-moi",
@@ -60,7 +54,7 @@ export default async function Header() {
                   return (
                     <Link
                       key={slug}
-                      href={`/danh-sach-truyen/${slug}`}
+                      href={`/danh-sach/${slug}`}
                       className={buttonVariants({
                         variant: "ghost",
                         className: "!justify-start",
@@ -83,7 +77,7 @@ export default async function Header() {
         <div className="hidden lg:flex items-center justify-center gap-4 flex-1 h-full absolute inset-0">
           {statuses.map(({ name, slug }) => {
             return (
-              <Link key={slug} href={`/danh-sach-truyen/${slug}`} className="">
+              <Link key={slug} href={`/danh-sach/${slug}`} className="">
                 {name}
               </Link>
             );

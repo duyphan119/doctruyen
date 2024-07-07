@@ -6,14 +6,17 @@ import { SearchResponse, storyApi } from "@/api/story.api";
 import { Button, buttonVariants } from "../ui/button";
 import { Input } from "../ui/input";
 import { ScrollArea } from "../ui/scroll-area";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { AspectRatio } from "../ui/aspect-ratio";
 import StoryCard from "./story-card";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 export default function ButtonSearch() {
+  const router = useRouter();
+
   const [response, setResponse] = useState<SearchResponse | null>(null);
   const [text, setText] = useState<string>("");
   const [modalSearchVisible, setModalSearchVisible] = useState<boolean>(false);
@@ -24,6 +27,12 @@ export default function ButtonSearch() {
 
   const handleCloseModalSearch = () => {
     setModalSearchVisible(false);
+  };
+
+  const handleSubmitForm = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    router.push(`/tim-kiem?keyword=${text}`);
+    handleCloseModalSearch();
   };
 
   const handleChangeText = (e: ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +64,10 @@ export default function ButtonSearch() {
             onClick={handleCloseModalSearch}
             className="overlay absolute inset-0 bg-neutral-700/50 z-10"
           />
-          <div className="flex-1 bg-white rounded-md z-20">
+          <form
+            onSubmit={handleSubmitForm}
+            className="flex-1 bg-white rounded-md z-20"
+          >
             <Input
               value={text}
               onChange={handleChangeText}
@@ -106,7 +118,7 @@ export default function ButtonSearch() {
                   Xem tất cả
                 </Link>
               )}
-          </div>
+          </form>
         </div>
       )}
     </>

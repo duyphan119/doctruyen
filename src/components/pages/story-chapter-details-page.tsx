@@ -2,7 +2,7 @@
 
 import { StoryChapterDetailsResponse } from "@/api/story.api";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import Image from "next/image";
+import NextImage from "next/image";
 import Link from "next/link";
 
 import {
@@ -18,6 +18,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { AspectRatio } from "../ui/aspect-ratio";
 import { buttonVariants } from "../ui/button";
+import ChapterImage from "../shared/chaper-image";
+import Image from "next/image";
 
 export default function StoryChapterDetailsPage({
   response,
@@ -92,27 +94,17 @@ export default function StoryChapterDetailsPage({
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative container">
       {response.data.item.chapter_image.map((item, index) => {
         const imageUrl = `${response.data.domain_cdn}/${response.data.item.chapter_path}/${item.image_file}`;
-
         return (
-          <AspectRatio
-            ratio={
-              index === 0 ||
-              index === response.data.item.chapter_image.length - 1
-                ? 16 / 9
-                : 9 / 16
-            }
-            key={imageUrl}
-            className="w-full"
-          >
+          <AspectRatio ratio={16 / 9} key={imageUrl}>
             <Image
-              alt={item.image_page.toString()}
+              alt={`Image ${item.image_page.toString()}`}
               src={imageUrl}
               fill
+              className="object-contain"
               sizes="100vw"
-              // className="object-contain"
             />
           </AspectRatio>
         );

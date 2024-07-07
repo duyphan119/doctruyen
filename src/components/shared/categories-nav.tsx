@@ -33,7 +33,7 @@ export default function CategoriesNav({
             {categories.map((category) => (
               <Link
                 key={category._id}
-                href={`/danh-sach-truyen/the-loai/${category.slug}`}
+                href={`/danh-sach/the-loai/${category.slug}`}
                 className={buttonVariants({
                   variant: "ghost",
                   className: "col-span-1",
